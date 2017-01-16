@@ -1,13 +1,13 @@
 ## serializer_field_filter
 
-field filter for active_model_serializer[https://github.com/rails-api/active_model_serializers]
+field filter for [active_model_serializers](https://github.com/rails-api/active_model_serializers)
 
 
 ### Install
 
 gem install 'serializer_field_filter'
 
-### Useage
+### Usage
 
 ```Ruby
   class BaseSerializer < ActiveModel::Serializer
