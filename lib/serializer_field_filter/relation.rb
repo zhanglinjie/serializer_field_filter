@@ -9,9 +9,11 @@ class SerializerFieldFilter
             resource_method_module = Module.new do
               define_method resource_name do
                 filter = instance_options[:field_filter]&.scope_of(resource_name)
-                resource_options = filter.resource_options.merge({
+                resource_options = {
                   serializer: serializer,
-                })
+                  fields: filter&.root_fields,
+                  field_filter: filter
+                }
                 resources = defined?(super) ? super() : object.send(resource_name)
                 if "#{relation_method_name}" == "has_many"
                   resources.to_a.map do |resource|

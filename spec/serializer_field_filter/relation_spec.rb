@@ -51,11 +51,26 @@ describe SerializerFieldFilter::Relation do
   let(:cource)    { Cource.new(id: 1, name: "cource", classroom: classroom, teacher: teacher, students: [student_1, student_2])}
 
   subject(:json) {
-    ActiveModelSerializers::SerializableResource.new(cource, filter.resource_options).as_json
+    ActiveModelSerializers::SerializableResource.new(cource, filter&.resource_options || {}).as_json
   }
 
   context "with all field" do
     let(:filter) { SerializerFieldFilter::AllField.new }
+    it { should eq({
+        id: 1,
+        name: 'cource',
+        classroom: { id: 1, name: 'classroom' },
+        teacher: { id: 1, name: 'teacher' },
+        students: [
+          { id: 1, name: 'student' },
+          { id: 2, name: 'student' }
+        ]
+      })
+     }
+  end
+
+  context "with nil" do
+    let(:filter) { nil }
     it { should eq({
         id: 1,
         name: 'cource',
